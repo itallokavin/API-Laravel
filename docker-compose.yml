@@ -1,0 +1,44 @@
+version: '3'
+
+services:
+
+  bd-postgres:
+    container_name: bd-postgres
+    image: postgres
+    environment:
+      POSTGRES_PASSWORD: root@1234
+      POSTGRES_USER: postgres
+      POSTGRES_DB: postgres
+    ports:
+      - 5432:5432
+    networks:
+      - laravel-postgres
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: laravel
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/var/www/html
+    networks:
+      - laravel-postgres
+    depends_on:
+      bd-postgres:
+        condition: service_healthy
+    command: bash -c " php artisan migrate && php artisan serve --host=0.0.0.0 --port=8000"
+    restart: unless-stopped
+    links:
+      - bd-postgres
+
+networks:
+  laravel-postgres:
+    driver: bridge

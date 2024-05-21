@@ -1,8 +1,10 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CartaoController;
 use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\EnderecoController;
+use App\Http\Controllers\LoginController;
 use App\Http\Controllers\TelefoneController;
 use App\Http\Controllers\UsuarioController;
 use Illuminate\Support\Facades\Route;
@@ -37,3 +39,4 @@ Route::post('/enderecos', [EnderecoController::class, 'store']);
 Route::patch('/enderecos/{id}', [EnderecoController::class, 'update']);
 Route::delete('/enderecos/{id}', [EnderecoController::class, 'destroy']);
 
+Route::post('/login', [AuthController::class, 'authenticate']);

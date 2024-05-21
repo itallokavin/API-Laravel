@@ -4,6 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 return new class extends Migration
 {
@@ -25,7 +26,7 @@ return new class extends Migration
         DB::table('usuarios')->insert([
             'nome' => 'Administrador',
             'usuario' => 'admin',
-            'senha' => bcrypt('admin123'), 
+            'senha' => Hash::make('admin123'), // Use Hash::make para consistência, 
             'email' => 'admin@gmail.com',
             'created_at' => now(),
             'updated_at' => now(),
@@ -37,6 +38,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        //
+        Schema::dropIfExists('usuarios');
     }
 };

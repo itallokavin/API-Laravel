@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\UsuarioRequest;
 use App\Http\Resources\UsuarioResource;
 use App\Models\Usuario;
+use Illuminate\Http\Request;
 
 class UsuarioController extends Controller
 {
@@ -18,7 +19,6 @@ class UsuarioController extends Controller
     {
         $data = $request->validated();
         $data['senha'] = bcrypt($request->senha);
-
         $usuario = Usuario::create($data);
 
         return new UsuarioResource($usuario);

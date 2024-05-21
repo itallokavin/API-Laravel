@@ -4,10 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Notifications\Notifiable;
 
 class Usuario extends Model
 {
-    use HasFactory;
+    use HasApiTokens,HasFactory,Notifiable;
 
     // Se a tabela não seguir a convenção padrão
     protected $table = 'usuarios';
@@ -31,14 +33,5 @@ class Usuario extends Model
      */
     protected $hidden = [
         'senha',
-    ];
-
-    /**
-     * The attributes that should be cast to native types.
-     *
-     * @var array<string, string>
-     */
-    protected $casts = [
-        'email_verified_at' => 'datetime',
     ];
 }

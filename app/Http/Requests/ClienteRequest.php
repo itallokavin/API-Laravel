@@ -43,8 +43,7 @@ class ClienteRequest extends FormRequest
             ],
 
             'data_nascimento' => [
-                'required',
-                'date',
+                'required'
             ]
         ];
 

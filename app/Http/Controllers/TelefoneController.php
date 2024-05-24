@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\TelefoneRequest;
 use App\Http\Resources\TelefoneResource;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use App\Models\Telefone;
 
 class TelefoneController extends Controller
@@ -24,9 +25,14 @@ class TelefoneController extends Controller
 
     public function show(string $id)
     {
-        $telefone = Telefone::findOrFail($id);
-
-        return new TelefoneResource($telefone);
+        try {
+            $telefone = Telefone::findOrFail($id);
+            return new TelefoneResource($telefone);
+        } catch (ModelNotFoundException $e) {
+            return response()->json([
+                'message' => 'Telefone not found',
+            ], 404);
+        }
     }
     
     public function update(TelefoneRequest $request, string $id)

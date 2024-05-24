@@ -23,6 +23,7 @@ Route::delete('/clientes/{id}', [ClienteController::class, 'destroy']);
 
 Route::get('/cartao', [CartaoController::class, 'index']);
 Route::get('/cartao/{id}', [CartaoController::class, 'show']);
+Route::get('/cartao/clientes/{id}', [CartaoController::class, 'showByClientId']);
 Route::post('/cartao', [CartaoController::class, 'store']);
 Route::patch('/cartao/{id}', [CartaoController::class, 'update']);
 Route::delete('/cartao/{id}', [CartaoController::class, 'destroy']);

@@ -68,7 +68,7 @@ class EnderecoRequest extends FormRequest
                 'max:8',
                 Rule::unique('endereco_cliente')
                     ->where('cliente_id', $this->input('cliente_id'))
-                    ->ignore($this->route('id'))
+                    ->ignore($this->id)
             ];
         }
 

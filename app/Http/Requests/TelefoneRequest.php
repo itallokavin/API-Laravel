@@ -31,7 +31,6 @@ class TelefoneRequest extends FormRequest
                 'required',
                 'min:10',
                 'max:11',
-                Rule::unique('telefone_cliente')->ignore($this->route('id'))
             ],
         ];
     
@@ -40,7 +39,7 @@ class TelefoneRequest extends FormRequest
                 'required',
                 'min:10',
                 'max:11',
-                Rule::unique('telefone_cliente')->ignore($this->route('id'))
+                Rule::unique('telefone_cliente')->ignore($this->id)
             ];
         }
     

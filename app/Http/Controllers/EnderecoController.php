@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\EnderecoRequest;
 use App\Http\Resources\EnderecoResource;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use App\Models\Endereco;
 
 class EnderecoController extends Controller
@@ -25,8 +26,15 @@ class EnderecoController extends Controller
 
     public function show(string $id)
     {
-        $endereco = Endereco::findOrFail($id);
-        return new EnderecoResource($endereco);
+        try{
+            $endereco = Endereco::findOrFail($id);
+            return new EnderecoResource($endereco);
+        }catch (ModelNotFoundException $e) {
+            return response()->json([
+                'message' => 'Endereco not found',
+            ], 404);
+        }
+        
     }
 
     public function update(EnderecoRequest $request, string $id)

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Cartao;
 use App\Http\Requests\CartaoRequest;
 use App\Http\Resources\CartaoResource;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Crypt;
 
 class CartaoController extends Controller
@@ -29,9 +30,31 @@ class CartaoController extends Controller
 
     public function show(string $id)
     {
-        $cartao = Cartao::findOrFail($id);
+        try {
+            //$cartoes = Cartao::where('cliente_id', $cliente_id)->get();
+            $cartao = Cartao::findOrFail($id);
+            return CartaoResource::collection($cartao);
+        } 
+        catch (ModelNotFoundException $e) {
+            return response()->json([
+                'message' => 'No cards found',
+            ], 404);
+        }
 
-        return new CartaoResource($cartao);
+    }
+
+    public function showByClientId(string $cliente_id)
+    {
+        try {
+            $cartoes = Cartao::where('cliente_id', $cliente_id)->get();
+            return CartaoResource::collection($cartoes);
+        } 
+        catch (ModelNotFoundException $e) {
+            return response()->json([
+                'message' => 'No cards found',
+            ], 404);
+        }
+
     }
     
     public function update(CartaoRequest $request, string $id)

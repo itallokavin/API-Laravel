@@ -19,7 +19,6 @@ class CartaoResource extends JsonResource
             'id'              => $this -> id,
             'cliente_id'      => $this -> cliente_id,
             'numero_cartao'   => $this -> numero_cartao,
-            'hash_cartao'     => $this -> hash_cartao,
             'validade_cartao' => $this -> validade_cartao,
             'cvv_cartao'      => $this -> cvv_cartao,
             'created'         => Carbon::make($this->created_at)->format('Y-m-d'),

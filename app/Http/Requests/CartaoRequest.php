@@ -33,9 +33,6 @@ class CartaoRequest extends FormRequest
                 'required',
                 'min:13',
                 'max:16',
-            ],
-
-            'hash_cartao' => [
                 'unique:cartao_cliente'
             ],
 
@@ -51,7 +48,7 @@ class CartaoRequest extends FormRequest
         ];
 
         if($this->method() === 'PATCH'){
-            $rules['hash_cartao'] = [
+            $rules['numero_cartao'] = [
                 Rule::unique('cartao_cliente')->ignore($this->id)
             ];
         }

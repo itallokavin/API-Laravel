@@ -20,8 +20,6 @@ class CartaoController extends Controller
     public function store(CartaoRequest $request)
     {
         $data = $request->validated();
-        $data['numero_cartao'] = Crypt::encryptString($request->numero_cartao);
-        $data['hash_cartao'] = hash('sha256',$request->numero_cartao);
 
         $cartao = Cartao::create($data);
         
@@ -31,9 +29,8 @@ class CartaoController extends Controller
     public function show(string $id)
     {
         try {
-            //$cartoes = Cartao::where('cliente_id', $cliente_id)->get();
             $cartao = Cartao::findOrFail($id);
-            return CartaoResource::collection($cartao);
+            return new CartaoResource($cartao);
         } 
         catch (ModelNotFoundException $e) {
             return response()->json([
@@ -62,9 +59,7 @@ class CartaoController extends Controller
         $cartao = Cartao::findOrFail($id);
 
         $data = $request->validated();
-        $data['numero_cartao'] = Crypt::encryptString($request->numero_cartao);
-        $data['hash_cartao'] = hash('sha256',$request->numero_cartao);
-           
+               
         $cartao->update($data);
 
         return new CartaoResource($cartao);

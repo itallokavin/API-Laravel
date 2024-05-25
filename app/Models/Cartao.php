@@ -14,7 +14,6 @@ class Cartao extends Model
     protected $fillable = [
         'cliente_id',
         'numero_cartao',
-        'hash_cartao',
         'validade_cartao',
         'cvv_cartao',
     ];
